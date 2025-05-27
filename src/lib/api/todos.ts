@@ -21,15 +21,17 @@ export const getTodos = async (): Promise<TodoResponseType> => {
   }
 };
 
-export const createTodo = async (todo: TodoRegisterType): Promise<void> => {
+export const registerTodo = async (todo: TodoRegisterType): Promise<void> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/todos`, {
+    const response = await fetch(`${API_BASE_URL}/todos/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(todo),
     });
+
+    console.log(response.json);
 
     if (!response.ok) {
       throw new Error("Todoの作成に失敗しました");

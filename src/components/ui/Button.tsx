@@ -1,39 +1,36 @@
 import Link from "next/link";
+import { ReactNode } from "react";
 
 type ButtonProps = {
+  children: ReactNode;
   href?: string;
-  children: React.ReactNode;
   variant?: "primary" | "secondary";
-  className?: string;
-  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
 };
 
 export const Button = ({
-  href,
   children,
+  href,
   variant = "primary",
-  className = "",
-  onClick,
+  type = "button",
 }: ButtonProps) => {
   const baseStyles =
-    "inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-300";
+    "px-4 py-2 rounded-lg font-medium transition-colors duration-200";
   const variantStyles = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg",
-    secondary: "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-lg",
+    primary: "bg-blue-500 text-white hover:bg-blue-600",
+    secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
   };
-
-  const buttonStyles = `${baseStyles} ${variantStyles[variant]} ${className}`;
 
   if (href) {
     return (
-      <Link href={href} className={buttonStyles}>
+      <Link href={href} className={`${baseStyles} ${variantStyles[variant]}`}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button onClick={onClick} className={buttonStyles}>
+    <button type={type} className={`${baseStyles} ${variantStyles[variant]}`}>
       {children}
     </button>
   );
