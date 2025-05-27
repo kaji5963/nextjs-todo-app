@@ -9,7 +9,7 @@ const Home = async () => {
   return (
     <Container>
       <div className="flex justify-end mb-6">
-        <Button href="/todos/new">新規作成</Button>
+        <Button href="/todos/register">新規作成</Button>
       </div>
       <div className="space-y-4">
         {todos.map((todo) => (

@@ -1,14 +1,40 @@
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
+import { registerTodo } from "@/lib/api/todos";
+import { redirect } from "next/navigation";
 
-export default function NewTodoPage() {
+const RegisterTodoPage = () => {
+  const registerFormAction = async (formData: FormData) => {
+    "use server";
+
+    try {
+      const title = formData.get("title") as string;
+      const description = formData.get("description") as string;
+
+      if (!title || !description) {
+        throw new Error("タイトルと説明は必須です");
+      }
+
+      await registerTodo({
+        title,
+        description,
+      });
+
+      // 登録成功後、一覧ページにリダイレクト
+      redirect("/");
+    } catch (error) {
+      console.error("登録エラー:", error);
+      throw error;
+    }
+  };
+
   return (
     <Container>
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-lg shadow-md p-6">
           <h1 className="text-2xl font-bold text-gray-800 mb-6">新規作成</h1>
 
-          <form className="space-y-4">
+          <form className="space-y-4" action={registerFormAction}>
             <div>
               <label
                 htmlFor="title"
@@ -20,6 +46,7 @@ export default function NewTodoPage() {
                 type="text"
                 id="title"
                 name="title"
+                required
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 placeholder="タイトルを入力"
               />
@@ -35,6 +62,7 @@ export default function NewTodoPage() {
               <textarea
                 id="description"
                 name="description"
+                required
                 rows={4}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 placeholder="説明を入力"
@@ -42,7 +70,7 @@ export default function NewTodoPage() {
             </div>
 
             <div className="flex justify-end space-x-4 pt-4">
-              <Button>作成</Button>
+              <Button type="submit">作成</Button>
               <Button href="/" variant="secondary">
                 キャンセル
               </Button>
@@ -52,4 +80,6 @@ export default function NewTodoPage() {
       </div>
     </Container>
   );
-}
+};
+
+export default RegisterTodoPage;
