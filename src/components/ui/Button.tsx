@@ -8,13 +8,13 @@ type ButtonProps = {
   onClick?: () => void;
 };
 
-export default function Button({
+export const Button = ({
   href,
   children,
   variant = "primary",
   className = "",
   onClick,
-}: ButtonProps) {
+}: ButtonProps) => {
   const baseStyles =
     "inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-300";
   const variantStyles = {
@@ -37,4 +37,6 @@ export default function Button({
       {children}
     </button>
   );
-}
+};
+
+export default Button;
