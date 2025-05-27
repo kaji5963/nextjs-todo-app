@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-export default function Header() {
+const Header = () => {
   return (
     <header className="bg-gradient-to-r from-purple-600 to-blue-500 shadow-lg">
       <div className="container mx-auto px-4 py-6">
@@ -31,4 +31,6 @@ export default function Header() {
       </div>
     </header>
   );
-}
+};
+
+export default Header;
