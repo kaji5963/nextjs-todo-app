@@ -87,3 +87,18 @@ export const updateTodo = async (
     throw error;
   }
 };
+
+export const deleteTodo = async (id: string) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/todos/${id}/delete`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Todo削除に失敗しました");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};

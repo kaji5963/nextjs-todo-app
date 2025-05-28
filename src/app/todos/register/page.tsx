@@ -7,6 +7,8 @@ const RegisterTodoPage = () => {
   const registerFormAction = async (formData: FormData) => {
     "use server";
 
+    let redirectTo = "";
+
     try {
       const title = formData.get("title") as string;
       const description = formData.get("description") as string;
@@ -20,12 +22,14 @@ const RegisterTodoPage = () => {
         description,
       });
 
-      // 登録成功後、一覧ページにリダイレクト
-      return redirect("/");
+      redirectTo = "/";
     } catch (error) {
       console.error("登録エラー:", error);
       throw error;
     }
+
+    // 登録成功後、一覧ページにリダイレクト
+    redirect(redirectTo);
   };
 
   return (
