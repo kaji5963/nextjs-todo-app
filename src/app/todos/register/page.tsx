@@ -21,7 +21,7 @@ const RegisterTodoPage = () => {
       });
 
       // 登録成功後、一覧ページにリダイレクト
-      redirect("/");
+      return redirect("/");
     } catch (error) {
       console.error("登録エラー:", error);
       throw error;
