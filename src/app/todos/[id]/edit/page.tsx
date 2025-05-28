@@ -1,9 +1,9 @@
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
-import { deleteTodo, getTodo, updateTodo } from "@/lib/api/todos";
-import { redirect } from "next/navigation";
+import { getTodo } from "@/lib/api/todos";
 import React from "react";
 import DeleteTodoForm from "@/components/features/todos/DeleteTodoForm";
+import { deleteFormAction, updateFormAction } from "@/actions/todoAction";
 
 interface EditTodoPageProps {
   params: Promise<{ id: string }>;
@@ -13,47 +13,6 @@ const EditTodoPage = async ({ params }: EditTodoPageProps) => {
   const { id } = await params;
   const todo = await getTodo(id);
 
-  const updateFormAction = async (formData: FormData) => {
-    "use server";
-
-    let redirectTo = "";
-    try {
-      const title = formData.get("title") as string;
-      const description = formData.get("description") as string;
-
-      if (!title || !description) {
-        throw new Error("タイトルと説明は必須です");
-      }
-
-      await updateTodo(id, { title, description });
-
-      redirectTo = "/";
-    } catch (error) {
-      console.error("更新エラー:", error);
-      throw error;
-    }
-
-    // 更新成功後、一覧ページにリダイレクト
-    redirect(redirectTo);
-  };
-
-  const deleteFormAction = async () => {
-    "use server";
-
-    let redirectTo = "";
-
-    try {
-      await deleteTodo(id);
-
-      redirectTo = "/";
-    } catch (error) {
-      console.error("削除エラー:", error);
-      throw error;
-    }
-
-    redirect("/");
-  };
-
   return (
     <Container>
       <div className="max-w-2xl mx-auto">
@@ -61,7 +20,7 @@ const EditTodoPage = async ({ params }: EditTodoPageProps) => {
           <h1 className="text-2xl font-bold text-gray-800 mb-6">編集</h1>
 
           <div className="space-y-4">
-            <form action={updateFormAction}>
+            <form action={updateFormAction.bind(null, id)}>
               <div>
                 <label
                   htmlFor="title"
@@ -106,7 +65,7 @@ const EditTodoPage = async ({ params }: EditTodoPageProps) => {
               </div>
             </form>
 
-            <DeleteTodoForm deleteAction={deleteFormAction} />
+            <DeleteTodoForm deleteAction={deleteFormAction.bind(null, id)} />
           </div>
         </div>
       </div>
