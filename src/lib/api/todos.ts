@@ -1,13 +1,14 @@
-import {
-  TodoResponseType,
-  TodoRegisterType,
-  TodoUpdateType,
-  TodoType,
-} from "./types";
+import { TodoResponse, TodoCreate, TodoUpdate, Todo } from "./types";
 
 const API_BASE_URL = "http://localhost:8080";
 
-export const getTodo = async (id: string): Promise<TodoType> => {
+/**
+ * 指定されたIDのTodoを取得する
+ * @param {string} id - 取得対象のTodoのID
+ * @returns {Promise<Todo>} 取得したTodoのデータ
+ * @throws {Error} 指定されたTodoが見つからない場合、またはデータ取得に失敗した場合
+ */
+export const getTodo = async (id: string): Promise<Todo> => {
   try {
     const response = await fetch(`${API_BASE_URL}/todos/${id}/edit`, {
       cache: "no-store",
@@ -20,7 +21,7 @@ export const getTodo = async (id: string): Promise<TodoType> => {
       throw new Error("データの取得に失敗しました");
     }
 
-    const todo: TodoType = await response.json();
+    const todo: Todo = await response.json();
     return todo;
   } catch (error) {
     console.error("Error:", error);
@@ -28,7 +29,12 @@ export const getTodo = async (id: string): Promise<TodoType> => {
   }
 };
 
-export const getTodoList = async (): Promise<TodoResponseType> => {
+/**
+ * Todoの一覧を取得する
+ * @returns {Promise<TodoResponse>} Todoの一覧データ
+ * @throws {Error} データ取得に失敗した場合
+ */
+export const getTodoList = async (): Promise<TodoResponse> => {
   try {
     const response = await fetch(`${API_BASE_URL}/`, {
       cache: "no-store",
@@ -38,7 +44,7 @@ export const getTodoList = async (): Promise<TodoResponseType> => {
       throw new Error("データの取得に失敗しました");
     }
 
-    const todoList: TodoResponseType = await response.json();
+    const todoList: TodoResponse = await response.json();
 
     return todoList;
   } catch (error) {
@@ -47,7 +53,13 @@ export const getTodoList = async (): Promise<TodoResponseType> => {
   }
 };
 
-export const registerTodo = async (todo: TodoRegisterType): Promise<void> => {
+/**
+ * 新しいTodoを登録する
+ * @param {TodoCreate} todo - 登録するTodoのデータ
+ * @returns {Promise<void>}
+ * @throws {Error} Todoの作成に失敗した場合
+ */
+export const registerTodo = async (todo: TodoCreate): Promise<void> => {
   try {
     const response = await fetch(`${API_BASE_URL}/todos/register`, {
       method: "POST",
@@ -66,9 +78,16 @@ export const registerTodo = async (todo: TodoRegisterType): Promise<void> => {
   }
 };
 
+/**
+ * 既存のTodoを更新する
+ * @param {string} id - 更新対象のTodoのID
+ * @param {TodoUpdate} todo - 更新するTodoのデータ
+ * @returns {Promise<void>}
+ * @throws {Error} Todoの更新に失敗した場合
+ */
 export const updateTodo = async (
   id: string,
-  todo: TodoUpdateType
+  todo: TodoUpdate
 ): Promise<void> => {
   try {
     const response = await fetch(`${API_BASE_URL}/todos/${id}/update`, {
@@ -88,6 +107,12 @@ export const updateTodo = async (
   }
 };
 
+/**
+ * Todoを削除する
+ * @param {string} id - 削除対象のTodoのID
+ * @returns {Promise<void>}
+ * @throws {Error} Todoの削除に失敗した場合
+ */
 export const deleteTodo = async (id: string) => {
   try {
     const response = await fetch(`${API_BASE_URL}/todos/${id}/delete`, {

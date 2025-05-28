@@ -1,37 +1,8 @@
+import { registerFormAction } from "@/actions/todoAction";
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
-import { registerTodo } from "@/lib/api/todos";
-import { redirect } from "next/navigation";
 
 const RegisterTodoPage = () => {
-  const registerFormAction = async (formData: FormData) => {
-    "use server";
-
-    let redirectTo = "";
-
-    try {
-      const title = formData.get("title") as string;
-      const description = formData.get("description") as string;
-
-      if (!title || !description) {
-        throw new Error("タイトルと説明は必須です");
-      }
-
-      await registerTodo({
-        title,
-        description,
-      });
-
-      redirectTo = "/";
-    } catch (error) {
-      console.error("登録エラー:", error);
-      throw error;
-    }
-
-    // 登録成功後、一覧ページにリダイレクト
-    redirect(redirectTo);
-  };
-
   return (
     <Container>
       <div className="max-w-2xl mx-auto">
