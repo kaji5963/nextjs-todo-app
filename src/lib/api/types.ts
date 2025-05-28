@@ -1,9 +1,9 @@
 // 基本のTodo実体
 export interface Todo {
-  id: number;
+  id: string;
   title: string;
   description: string;
-  // completed: boolean; // 通常のTodoアプリに必要
+  completed: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -20,11 +20,11 @@ export interface TodoInput {
 }
 
 // 作成用の型（必須フィールドのみ）
-export type TodoCreate = TodoInput;
+export type TodoRegister = TodoInput;
 
 // 更新用の型（部分更新対応 + completed状態も変更可能）
 export interface TodoUpdate {
   title?: string;
   description?: string;
-  // completed?: boolean;
+  completed?: boolean;
 }
