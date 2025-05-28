@@ -2,8 +2,7 @@ import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 import { getTodo } from "@/lib/api/todos";
 import React from "react";
-import DeleteTodoForm from "@/components/features/todos/DeleteTodoForm";
-import { deleteFormAction, updateFormAction } from "@/actions/todoAction";
+import { updateFormAction } from "@/actions/todoAction";
 
 interface EditTodoPageProps {
   params: Promise<{ id: string }>;
@@ -21,10 +20,10 @@ const EditTodoPage = async ({ params }: EditTodoPageProps) => {
 
           <div className="space-y-4">
             <form action={updateFormAction.bind(null, id)}>
-              <div>
+              <div className="mb-6">
                 <label
                   htmlFor="title"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 mb-2"
                 >
                   タイトル
                 </label>
@@ -34,15 +33,15 @@ const EditTodoPage = async ({ params }: EditTodoPageProps) => {
                   name="title"
                   required
                   defaultValue={todo.title}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                   placeholder="タイトルを入力"
                 />
               </div>
 
-              <div>
+              <div className="mb-6">
                 <label
                   htmlFor="description"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 mb-2"
                 >
                   説明
                 </label>
@@ -52,7 +51,7 @@ const EditTodoPage = async ({ params }: EditTodoPageProps) => {
                   required
                   rows={4}
                   defaultValue={todo.description}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                   placeholder="説明を入力"
                 />
               </div>
@@ -64,8 +63,6 @@ const EditTodoPage = async ({ params }: EditTodoPageProps) => {
                 </Button>
               </div>
             </form>
-
-            <DeleteTodoForm deleteAction={deleteFormAction.bind(null, id)} />
           </div>
         </div>
       </div>

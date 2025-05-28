@@ -1,4 +1,4 @@
-import { TodoResponse, TodoCreate, TodoUpdate, Todo } from "./types";
+import { TodoResponse, TodoRegister, TodoUpdate, Todo } from "./types";
 
 const API_BASE_URL = "http://localhost:8080";
 
@@ -55,11 +55,11 @@ export const getTodoList = async (): Promise<TodoResponse> => {
 
 /**
  * 新しいTodoを登録する
- * @param {TodoCreate} todo - 登録するTodoのデータ
+ * @param {TodoRegister} todo - 登録するTodoのデータ
  * @returns {Promise<void>}
  * @throws {Error} Todoの作成に失敗した場合
  */
-export const registerTodo = async (todo: TodoCreate): Promise<void> => {
+export const registerTodo = async (todo: TodoRegister): Promise<void> => {
   try {
     const response = await fetch(`${API_BASE_URL}/todos/register`, {
       method: "POST",
@@ -99,7 +99,7 @@ export const updateTodo = async (
     });
 
     if (!response.ok) {
-      throw new Error("Todoの作成に失敗しました");
+      throw new Error("Todoの更新に失敗しました");
     }
   } catch (error) {
     console.error("Error:", error);

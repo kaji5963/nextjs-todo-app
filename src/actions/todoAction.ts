@@ -2,6 +2,7 @@
 
 import { deleteTodo, registerTodo, updateTodo } from "@/lib/api/todos";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 /**
  * Todoの新規登録を行うServer Action
@@ -26,6 +27,7 @@ export const registerFormAction = async (formData: FormData) => {
     });
 
     redirectTo = "/";
+    revalidatePath("/");
   } catch (error) {
     console.error("登録エラー:", error);
     throw error;
@@ -55,6 +57,8 @@ export const updateFormAction = async (id: string, formData: FormData) => {
     await updateTodo(id, { title, description });
 
     redirectTo = "/";
+    revalidatePath("/");
+    revalidatePath(`/todos/${id}`);
   } catch (error) {
     console.error("更新エラー:", error);
     throw error;
@@ -77,6 +81,8 @@ export const deleteFormAction = async (id: string) => {
     await deleteTodo(id);
 
     redirectTo = "/";
+    revalidatePath("/");
+    revalidatePath(`/todos/${id}`);
   } catch (error) {
     console.error("削除エラー:", error);
     throw error;
