@@ -8,10 +8,10 @@ const Home = async () => {
 
   return (
     <Container>
-      <div className="flex justify-end mb-6">
+      <div className="flex justify-end mb-4">
         <Button href="/todos/register">新規作成</Button>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-6">
         {todos.map((todo) => (
           <TodoItem key={todo.id} todo={todo} />
         ))}

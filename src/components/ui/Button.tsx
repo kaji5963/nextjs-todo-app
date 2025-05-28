@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 
-type ButtonProps = {
+interface ButtonProps {
   children: ReactNode;
   href?: string;
   variant?: "primary" | "secondary" | "danger";
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
-};
+}
 
 const Button = ({
   children,
@@ -17,7 +17,7 @@ const Button = ({
   onClick,
 }: ButtonProps) => {
   const baseStyles =
-    "px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2";
+    "px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer";
 
   const variantStyles = {
     primary:

@@ -5,11 +5,11 @@ import { redirect } from "next/navigation";
 import React from "react";
 import DeleteTodoForm from "@/components/features/todos/DeleteTodoForm";
 
-const EditTodoPage = async ({
-  params,
-}: {
+interface EditTodoPageProps {
   params: Promise<{ id: string }>;
-}) => {
+}
+
+const EditTodoPage = async ({ params }: EditTodoPageProps) => {
   const { id } = await params;
   const todo = await getTodo(id);
 
