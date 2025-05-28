@@ -1,8 +1,34 @@
-import { TodoResponseType, TodoRegisterType } from "./types";
+import {
+  TodoResponseType,
+  TodoRegisterType,
+  TodoUpdateType,
+  TodoType,
+} from "./types";
 
 const API_BASE_URL = "http://localhost:8080";
 
-export const getTodos = async (): Promise<TodoResponseType> => {
+export const getTodo = async (id: string): Promise<TodoType> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/todos/${id}/edit`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error("指定されたTodoが見つかりません");
+      }
+      throw new Error("データの取得に失敗しました");
+    }
+
+    const todo: TodoType = await response.json();
+    return todo;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
+
+export const getTodoList = async (): Promise<TodoResponseType> => {
   try {
     const response = await fetch(`${API_BASE_URL}/`, {
       cache: "no-store",
@@ -12,9 +38,9 @@ export const getTodos = async (): Promise<TodoResponseType> => {
       throw new Error("データの取得に失敗しました");
     }
 
-    const todos = await response.json();
+    const todoList: TodoResponseType = await response.json();
 
-    return todos;
+    return todoList;
   } catch (error) {
     console.error("Error:", error);
     throw error;
@@ -31,8 +57,6 @@ export const registerTodo = async (todo: TodoRegisterType): Promise<void> => {
       body: JSON.stringify(todo),
     });
 
-    console.log(response.json);
-
     if (!response.ok) {
       throw new Error("Todoの作成に失敗しました");
     }
@@ -40,4 +64,11 @@ export const registerTodo = async (todo: TodoRegisterType): Promise<void> => {
     console.error("Error:", error);
     throw error;
   }
+};
+
+export const updateTodo = async (
+  id: string,
+  todo: TodoUpdateType
+): Promise<void> => {
+  // 更新用API
 };
