@@ -1,10 +1,10 @@
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
-import { getTodos } from "@/lib/api/todos";
+import { getTodoList } from "@/lib/api/todos";
 import { TodoItem } from "@/components/features/todos/TodoItem";
 
 const Home = async () => {
-  const { todos } = await getTodos();
+  const { todos } = await getTodoList();
 
   return (
     <Container>

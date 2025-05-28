@@ -14,3 +14,8 @@ export type TodoRegisterType = {
   title: string;
   description: string;
 };
+
+export type TodoUpdateType = {
+  title: string;
+  description: string;
+};
