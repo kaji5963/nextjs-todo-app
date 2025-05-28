@@ -1,12 +1,12 @@
 "use client";
 
-type ModalProps = {
+interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
   title: string;
   message: string;
-};
+}
 
 const Modal = ({ isOpen, onClose, onConfirm, title, message }: ModalProps) => {
   if (!isOpen) return null;
@@ -19,13 +19,13 @@ const Modal = ({ isOpen, onClose, onConfirm, title, message }: ModalProps) => {
         <div className="flex justify-end space-x-4">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+            className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"
           >
             キャンセル
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 bg-red-600 text-white hover:bg-red-700 rounded-lg"
+            className="px-4 py-2 bg-red-600 text-white hover:bg-red-700 rounded-lg cursor-pointer"
           >
             削除
           </button>

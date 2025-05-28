@@ -1,6 +1,6 @@
-type ContainerProps = {
+interface ContainerProps {
   children: React.ReactNode;
-};
+}
 
 const Container = ({ children }: ContainerProps) => {
   return (
