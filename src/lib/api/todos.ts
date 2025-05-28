@@ -70,5 +70,20 @@ export const updateTodo = async (
   id: string,
   todo: TodoUpdateType
 ): Promise<void> => {
-  // 更新用API
+  try {
+    const response = await fetch(`${API_BASE_URL}/todos/${id}/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(todo),
+    });
+
+    if (!response.ok) {
+      throw new Error("Todoの作成に失敗しました");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
 };
