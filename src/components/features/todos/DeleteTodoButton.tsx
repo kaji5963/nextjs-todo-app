@@ -5,36 +5,34 @@ import { deleteTodo } from "@/lib/api/todos";
 
 interface DeleteTodoButtonProps {
   todoId: string;
+  onDelete?: (id: string) => void;
   onDeleteStart?: () => void;
 }
 
 export const DeleteTodoButton = ({
   todoId,
+  onDelete,
   onDeleteStart,
 }: DeleteTodoButtonProps) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
     try {
-      setIsLoading(true);
+      setIsDeleting(true);
       onDeleteStart?.();
-      // アニメーションの時間を考慮して少し遅延させる
-      await new Promise((resolve) => setTimeout(resolve, 300));
       await deleteTodo(todoId);
-      window.location.reload();
+      onDelete?.(todoId);
     } catch (error) {
-      console.error("削除に失敗しました:", error);
-      // TODO: エラー通知の実装
-    } finally {
-      setIsLoading(false);
+      console.error("Failed to delete todo:", error);
+      setIsDeleting(false);
     }
   };
 
   return (
     <button
       onClick={handleDelete}
-      disabled={isLoading}
-      className="p-2 rounded-full transition-colors cursor-pointer bg-red-50 text-red-400 hover:bg-red-100"
+      disabled={isDeleting}
+      className="p-2 rounded-full transition-colors cursor-pointer bg-red-50 text-red-400 hover:bg-red-100 disabled:opacity-50 disabled:cursor-not-allowed"
       aria-label="削除"
     >
       <svg

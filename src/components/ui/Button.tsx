@@ -1,50 +1,37 @@
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ButtonHTMLAttributes } from "react";
 
-interface ButtonProps {
-  children: ReactNode;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
-  variant?: "primary" | "secondary" | "danger";
-  type?: "button" | "submit" | "reset";
-  onClick?: () => void;
+  variant?: "primary" | "secondary";
+  className?: string;
 }
 
 const Button = ({
   children,
   href,
   variant = "primary",
-  type = "button",
-  onClick,
+  className = "",
+  ...props
 }: ButtonProps) => {
-  const baseStyles =
-    "px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer";
-
+  const baseStyles = "px-4 py-2 rounded-md font-medium transition-colors";
   const variantStyles = {
-    primary:
-      "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 shadow-sm",
-    secondary:
-      "bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500 shadow-sm",
-    danger:
-      "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-sm",
+    primary: "bg-blue-600 text-white hover:bg-blue-700",
+    secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
   };
+
+  const buttonStyles = `${baseStyles} ${variantStyles[variant]} ${className}`;
 
   if (href) {
     return (
-      <Link
-        href={href}
-        className={`${baseStyles} ${variantStyles[variant]} inline-block`}
-      >
+      <Link href={href} className={buttonStyles}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button
-      type={type}
-      className={`${baseStyles} ${variantStyles[variant]}`}
-      onClick={onClick}
-    >
+    <button className={buttonStyles} {...props}>
       {children}
     </button>
   );

@@ -1,5 +1,7 @@
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import Textarea from "@/components/ui/Textarea";
 import { getTodo } from "@/lib/api/todos";
 import React from "react";
 import { updateFormAction } from "@/actions/todoAction";
@@ -20,41 +22,25 @@ const EditTodoPage = async ({ params }: EditTodoPageProps) => {
 
           <div className="space-y-4">
             <form action={updateFormAction.bind(null, id)}>
-              <div className="mb-6">
-                <label
-                  htmlFor="title"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  タイトル
-                </label>
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  required
-                  defaultValue={todo.title}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
-                  placeholder="タイトルを入力"
-                />
-              </div>
+              <Input
+                id="title"
+                name="title"
+                type="text"
+                label="タイトル"
+                required
+                defaultValue={todo.title}
+                placeholder="タイトルを入力"
+              />
 
-              <div className="mb-6">
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  説明
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  required
-                  rows={4}
-                  defaultValue={todo.description}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
-                  placeholder="説明を入力"
-                />
-              </div>
+              <Textarea
+                id="description"
+                name="description"
+                label="説明"
+                required
+                rows={4}
+                defaultValue={todo.description}
+                placeholder="説明を入力"
+              />
 
               <div className="flex justify-end space-x-4 pt-4">
                 <Button type="submit">更新</Button>
