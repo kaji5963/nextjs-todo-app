@@ -1,6 +1,8 @@
 import { registerFormAction } from "@/actions/todoAction";
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import Textarea from "@/components/ui/Textarea";
 
 const RegisterTodoPage = () => {
   return (
@@ -10,39 +12,23 @@ const RegisterTodoPage = () => {
           <h1 className="text-2xl font-bold text-gray-800 mb-6">新規作成</h1>
 
           <form className="space-y-4" action={registerFormAction}>
-            <div>
-              <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                タイトル
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-                placeholder="タイトルを入力"
-              />
-            </div>
+            <Input
+              id="title"
+              name="title"
+              type="text"
+              label="タイトル"
+              required
+              placeholder="タイトルを入力"
+            />
 
-            <div>
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                説明
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                required
-                rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-                placeholder="説明を入力"
-              />
-            </div>
+            <Textarea
+              id="description"
+              name="description"
+              label="説明"
+              required
+              rows={4}
+              placeholder="説明を入力"
+            />
 
             <div className="flex justify-end space-x-4 pt-4">
               <Button type="submit">作成</Button>

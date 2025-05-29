@@ -8,9 +8,10 @@ import { useState } from "react";
 
 interface TodoItemProps {
   todo: Todo;
+  onDelete?: (id: string) => void;
 }
 
-export const TodoItem = ({ todo }: TodoItemProps) => {
+export const TodoItem = ({ todo, onDelete }: TodoItemProps) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   return (
@@ -43,6 +44,7 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
           />
           <DeleteTodoButton
             todoId={todo.id}
+            onDelete={onDelete}
             onDeleteStart={() => setIsDeleting(true)}
           />
         </div>
