@@ -2,6 +2,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Link from "next/link";
 import AnimatedBackground from "@/components/features/auth/AnimatedBackground";
+import { registerUserAction } from "@/actions/authAction";
 
 export default function SignupPage() {
   return (
@@ -23,7 +24,7 @@ export default function SignupPage() {
         </div>
 
         <div className="mt-8 bg-white/80 backdrop-blur-sm py-8 px-4 shadow-xl rounded-lg sm:px-10 border border-slate-200/50">
-          <form className="space-y-6">
+          <form className="space-y-6" action={registerUserAction}>
             <Input
               id="name"
               name="name"

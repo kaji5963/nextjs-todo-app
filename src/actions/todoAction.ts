@@ -1,8 +1,29 @@
 "use server";
 
-import { deleteTodo, registerTodo, updateTodo } from "@/lib/api/todos";
+import {
+  deleteTodo,
+  getTodoList,
+  registerTodo,
+  updateTodo,
+} from "@/lib/api/todos";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+
+export const getAllTodoList = async () => {
+  // サーバーサイドでクッキーを取得
+  const cookieStore = cookies();
+  const sessionToken = (await cookieStore).get("session-token");
+  const userInfo = (await cookieStore).get("user-info");
+
+  // クッキーが存在しない場合はログインが必要
+  if (!sessionToken) {
+    throw new Error("認証が必要です");
+  }
+
+  const todoList = await getTodoList(sessionToken, userInfo);
+  return todoList;
+};
 
 /**
  * Todoの新規登録を行うServer Action

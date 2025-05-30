@@ -1,4 +1,6 @@
+import { cookies } from "next/headers";
 import { TodoResponse, TodoRegister, TodoUpdate, Todo } from "./types";
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 const API_BASE_URL = "http://localhost:8080";
 
@@ -12,6 +14,7 @@ export const getTodo = async (id: string): Promise<Todo> => {
   try {
     const response = await fetch(`${API_BASE_URL}/todos/${id}/edit`, {
       cache: "no-store",
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -34,10 +37,17 @@ export const getTodo = async (id: string): Promise<Todo> => {
  * @returns {Promise<TodoResponse>} Todoの一覧データ
  * @throws {Error} データ取得に失敗した場合
  */
-export const getTodoList = async (): Promise<TodoResponse> => {
+export const getTodoList = async (
+  sessionToken: RequestCookie,
+  userInfo: RequestCookie | undefined
+): Promise<TodoResponse> => {
   try {
     const response = await fetch(`${API_BASE_URL}/`, {
       cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${sessionToken.value}`,
+        "Content-Type": "application/json",
+      },
     });
 
     if (!response.ok) {
@@ -45,7 +55,6 @@ export const getTodoList = async (): Promise<TodoResponse> => {
     }
 
     const todoList: TodoResponse = await response.json();
-
     return todoList;
   } catch (error) {
     console.error("Error:", error);
@@ -66,6 +75,7 @@ export const registerTodo = async (todo: TodoRegister): Promise<void> => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(todo),
     });
 
@@ -95,6 +105,7 @@ export const updateTodo = async (
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(todo),
     });
 
@@ -117,6 +128,7 @@ export const deleteTodo = async (id: string) => {
   try {
     const response = await fetch(`${API_BASE_URL}/todos/${id}/delete`, {
       method: "DELETE",
+      credentials: "include",
     });
 
     if (!response.ok) {

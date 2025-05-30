@@ -28,3 +28,28 @@ export interface TodoUpdate {
   description?: string;
   completed?: boolean;
 }
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  createdAt: string;
+  updatedAt: string;
+  rememberToken: string;
+  rememberTokenExpiresAt: string;
+}
+
+export interface SignupInput {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
+
+export interface loginInput {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
